@@ -34,7 +34,7 @@ func scrappWebPage(link string, wg *sync.WaitGroup, ch chan<- *entities.Feed, sc
 	defer wg.Done()
 	feed, err := scrapper.ParseURL(link)
 	if err != nil {
-		log.Printf("Some error occurred while trying to scrapp the %v page. This website will be ignored", link)
+		log.Printf("Some error occurred while trying to scrapp the %v page. This website will be ignored. Err: %v", link, err)
 		return
 	}
 	for _, v := range feed.Items {

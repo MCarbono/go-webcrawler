@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"go-webscrapper/application"
+	"go-webscrapper/infra/controller"
 	"go-webscrapper/infra/database"
 	"go-webscrapper/infra/repository"
 	"time"
@@ -21,14 +22,9 @@ func main() {
 		FeedRepository: feedRepository,
 		Scrapper:       gofeed.NewParser(),
 	}
+	feedController := controller.NewFeedController(createFeeds)
 	startAt := time.Now()
-	createFeeds.Execute([]string{
-		"https://catracalivre.com.br/feed/",
-		"https://www.infomoney.com.br/feed/",
-		"https://forbes.com.br/feed/",
-		"https://www.cnnbrasil.com.br/feed/",
-		"https://www.moneytimes.com.br/feed/",
-	})
+	feedController.Execute()
 	endAt := time.Now()
 	diff := endAt.Sub(startAt)
 	fmt.Printf("Pages has been scrapped. \nTime elapsed: %v", diff.Seconds())
